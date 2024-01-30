@@ -28,12 +28,14 @@ def set_gauges(data: tuple, room: str):
     humidity_gauge.labels(room).set(humidity / 100.0)
     pressure_gauge.labels(room).set(pressure)
     battery_gauge.labels(room).set(battery / 1000.0)
+    print(f"{room} temp:{temp}")
 
 
 async def main():
     """Async function that runs and gathers data from RuuviTags"""
     async for data in RuuviTagSensor.get_data_async():
         sensor_mac = data[0]
+        print("Received data")
         if sensor_mac == sensors["Livingroom"]:
             room = "Livingroom"
             set_gauges(data, room)
